@@ -1,7 +1,7 @@
 So this is a very simple project for my group members.
 You just need to clone this project.
 
-git clone 
+git clone https://github.com/himanshubarnwal711/DjangoMembersProject.git
 
 Either be in ubuntu or linux.
 
