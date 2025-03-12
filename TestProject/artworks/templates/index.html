@@ -1,0 +1,147 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to Artworks</title>
+  <style>
+    :root {
+      --bg-color: #f6f9fc;
+      --text-color: #333;
+      --container-bg: #fff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --button-bg: #2ecc71;
+      --button-hover: #27ae60;
+      --navbar-button: #e74c3c;
+      --navbar-hover: #c0392b;
+    }
+
+    body.dark {
+      --bg-color: #1e1e1e;
+      --text-color: #f1f1f1;
+      --container-bg: #2b2b2b;
+      --shadow-color: rgba(255, 255, 255, 0.05);
+      --button-bg: #4cd137;
+      --button-hover: #44bd32;
+      --navbar-button: #ff6b6b;
+      --navbar-hover: #ff4d4d;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      padding: 2rem;
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .navbar a,
+    .navbar button {
+      background-color: var(--navbar-button);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .navbar a:hover,
+    .navbar button:hover {
+      background-color: var(--navbar-hover);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 5rem auto;
+      text-align: center;
+      background-color: var(--container-bg);
+      padding: 3rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .register-btn {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .register-btn:hover {
+      background-color: var(--button-hover);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .register-btn {
+        width: 100%;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="{% url 'members' %}">View All Members</a>
+    <button onclick="toggleDarkMode()">🌗 Toggle Dark Mode</button>
+  </div>
+
+  <div class="container">
+    <h1>Welcome to Artworks Folks 🎨</h1>
+    <p>Click the button below to register as a member of our awesome community.</p>
+    <a href="{% url 'register' %}">
+      <button class="register-btn">Register</button>
+    </a>
+  </div>
+
+  <script>
+    // Check saved mode
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark');
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Artworks</title>
+  <style>
+    :root {
+      --bg-light: #f9f9f9;
+      --bg-dark: #1e1e1e;
+      --card-light: #ffffff;
+      --card-dark: #2a2a2a;
+      --text-light: #333;
+      --text-dark: #eee;
+      --input-border: #ccc;
+      --input-bg: #f0f0f0;
+      --primary: #007bff;
+      --btn-glow: #00ffe5;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .form-container {
+      background-color: var(--card-light);
+      padding: 2.5rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+      width: 100%;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    body.dark .form-container {
+      background-color: var(--card-dark);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark input {
+      background-color: #3c3c3c;
+      border: 1px solid #555;
+      color: white;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #000;
+      background-color: var(--btn-glow);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 12px var(--btn-glow), 0 0 24px var(--btn-glow);
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.03);
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, #ffffff33 10%, transparent 11%) center/10px 10px;
+      animation: sparkle 4s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes sparkle {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100px 100px;
+      }
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #444;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    .dark-toggle:hover {
+      background: #666;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dark Mode Toggle -->
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌗 Toggle Dark Mode</button>
+
+  <div class="form-container">
+    <h2>🖌️ Register for Artworks</h2>
+    <form action="{% url 'register' %}" method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" required>
+      </div>
+
+      <div class="form-group">
+        <label for="state">State</label>
+        <input type="text" id="state" name="state" required>
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+
+      <button type="submit" class="submit-btn">✨ Submit</button>
+    </form>
+  </div>
+
+  <script>
+    // Initialize dark mode based on preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (localStorage.getItem('darkMode') === 'enabled' || (!localStorage.getItem('darkMode') && prefersDark)) {
+      document.body.classList.add('dark');
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    }
+  </script>
+</body>
+</html>
