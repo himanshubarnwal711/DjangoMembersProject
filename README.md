@@ -24,11 +24,21 @@ django-admin --version
 
 
 
-Go to cd Testproject/
-
 Run these commands
 python3 manage.py makemigrations artworks
 python manage.py migrate
 
 Run this server at 127.0.0.1:8000/
 python3 manage.py runserver
+
+
+
+Go to cd Testproject/
+
+Directly run the Dockerfile:-
+cd TestProject/
+docker build -t django-artworks .
+docker run -p 8000:8000 django-artworks
+
+Or you can directly run docker public image:-
+docker run -p 8000:8000 rrai2229/django-artworks:latest
